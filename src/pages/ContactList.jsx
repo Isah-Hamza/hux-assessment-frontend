@@ -4,39 +4,43 @@ import { CgCopy, CgTrashEmpty } from 'react-icons/cg'
 import { BiEditAlt } from 'react-icons/bi'
 import { Link, useNavigate } from 'react-router-dom'
 import { BsEye } from 'react-icons/bs'
-import { useQuery } from 'react-query'
+import { useMutation, useQuery } from 'react-query'
 import Contact from '../services/Contact'
+import LoadingModal from '../components/Modal/LoadingModal'
+import { errorToast, successToast } from '../utils/Helper'
 const ContactList = () => {
     const navigate =  useNavigate();
     const [deleteModal, setDeleteModal] = useState(false);
     const user_id = JSON.parse(window.localStorage.getItem('hux-user'))?.id;
     const toggleDelete = () => setDeleteModal(!deleteModal)
-
-    const contacts = [
-        {
-            id:1,
-            first_name:'Hamza',
-            last_name:'Isah',
-            phone_number:'09085353455',
-        },
-        {
-            id:2,
-            first_name:'Tunde',
-            last_name:'mystified',
-            phone_number:'081884323009',
-        },
-    ]
+    const [id, setId] = useState(0);
 
     const editContact = (item) => {
         navigate(`${item.id}/edit`, { state: { contact:item } });
     }
 
     const handleDelete = (id) => {
-        setId(id);
         toggleDelete();
+        setId(id);
     }
 
-    const { isLoading, data  } = useQuery(['get-contacts', user_id], () => Contact.GetContacts(user_id))
+    const  { isLoading , mutate} = useMutation(Contact.DeleteContact, {
+        onSuccess: res => {
+            navigate('/contacts');
+            successToast(res.data.message);
+            toggleDelete()
+            refetch()
+        },
+        onError: e => {
+            errorToast(e.message);
+        }
+    })
+
+    const confirmDelete = () => {
+        mutate({ contact_id:id, user_id })
+    }
+
+    const { data, refetch  } = useQuery(['get-contacts', user_id], () => Contact.GetContacts(user_id))
 
   return (
     <div className='bg-[#ebeff5] min-h-screen pb-20'>
@@ -87,7 +91,7 @@ const ContactList = () => {
                             Cancel 
                         </button>
                         <button
-                            type="submit"
+                            onClick={confirmDelete}
                             className="px-5 bg-[tomato] rounded-md py-3 w-full font-medium flex items-center justify-center gap-2"
                         >
                             <CgTrashEmpty color='red' size={20} />
@@ -96,6 +100,9 @@ const ContactList = () => {
                     </div>
                 </div>
             </div>: null    
+        }
+                {
+            isLoading ? <LoadingModal /> : null
         }
     </div>
   )

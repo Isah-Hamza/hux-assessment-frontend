@@ -25,7 +25,7 @@ const Login = () => {
         window.localStorage.setItem("hux-token", res.data.token);
         window.localStorage.setItem("hux-user", JSON.stringify(res.data.user));
         // successToast(res.data.message);
-        navigate("/");
+        navigate("/contacts");
       },
     });
   

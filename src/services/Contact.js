@@ -25,9 +25,17 @@ const EditContact = ({user_id, contact_id, payload}) => {
     .catch((error) => Promise.reject(error));
 };
  
+const DeleteContact = ({user_id, contact_id}) => {
+  return axiosClient()
+    .delete(`${endpoints.contact.GET_CONTACTS}/${user_id}/contacts/${contact_id}`)
+    .then((res) => res)
+    .catch((error) => Promise.reject(error));
+};
+ 
 
 export default {
   GetContacts,
   CreateContact,
   EditContact,
+  DeleteContact,
 };

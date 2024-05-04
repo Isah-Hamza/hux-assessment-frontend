@@ -23,7 +23,7 @@ const EditContact = () => {
     const { isLoading, mutate } = useMutation(Contact.EditContact, {
       onError: (e) => errorToast(e.message),
       onSuccess: (res) => { 
-        // successToast(res.data.message);
+        successToast(res.data.message);
         // navigate("/contacts");
         navigate(-1);
       },

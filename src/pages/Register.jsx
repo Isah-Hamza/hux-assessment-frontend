@@ -10,7 +10,6 @@ import { successToast, errorToast } from '../utils/Helper'
 import LoadingModal from "../components/Modal/LoadingModal";
 import { useMutation, useQuery } from "react-query";
 import Auth from '../services/Auth';
-import { toast } from 'react-toastify';
 
 const Register = () => {
 
@@ -20,8 +19,8 @@ const Register = () => {
     const { isLoading, mutate } = useMutation(Auth.Register, {
       onError: (e) => errorToast(e.message),
       onSuccess: (res) => { 
-        // successToast(res.data.message);
-        navigate("/");
+        successToast(res.data.message);
+        navigate("/login");
       },
     });
   
@@ -31,12 +30,12 @@ const Register = () => {
         password: '',
         confirm:'',
       },
-      // validationSchema: Yup.object().shape({
-      //   email: Yup.string().required(),
-      //   password: Yup.string().required(),
-      //   confirm: Yup.string()
-      //     .oneOf([Yup.ref('password'), null], "Passwords doesn't match"),
-      // }),
+      validationSchema: Yup.object().shape({
+        email: Yup.string().required(),
+        password: Yup.string().required(),
+        confirm: Yup.string()
+          .oneOf([Yup.ref('password'), null], "Passwords doesn't match"),
+      }),
       onSubmit: values => {
         const data = { 
           email: values.email,

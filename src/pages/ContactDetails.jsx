@@ -4,11 +4,16 @@ import { CgCopy, CgTrashEmpty } from 'react-icons/cg'
 import { BiEditAlt } from 'react-icons/bi'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { BsEye } from 'react-icons/bs'
+import { useMutation } from 'react-query'
+import Contact from '../services/Contact'
+import { errorToast, successToast } from '../utils/Helper'
+import LoadingModal from '../components/Modal/LoadingModal'
 const ContactDetails = () => {
     const navigate =  useNavigate();
     const [deleteModal, setDeleteModal] = useState(false);
-    const [id, setId] = useState();
     const { contact:item }  = useLocation().state
+    const user_id = JSON.parse(window.localStorage.getItem('hux-user'))?.id;
+
 
     const toggleDelete = () => setDeleteModal(!deleteModal)
 
@@ -17,9 +22,23 @@ const ContactDetails = () => {
     }
 
     const handleDelete = (id) => {
-        setId(id);
         toggleDelete();
     }
+
+    const  { data, isloading , mutate} = useMutation(Contact.DeleteContact, {
+        onSuccess: res => {
+            navigate('/contacts');
+            successToast(res.data.message);
+        },
+        onError: e => {
+            errorToast(e.message);
+        }
+    })
+
+    const confirmDelete = () => {
+        mutate({ contact_id:item.id, user_id })
+    }
+
 
     useEffect(() => {
     if(!item){
@@ -67,6 +86,7 @@ const ContactDetails = () => {
                         Cancel 
                     </button>
                     <button
+                        onClick={confirmDelete}
                         type="submit"
                         className="px-5 bg-[tomato] rounded-md py-3 w-full font-medium flex items-center justify-center gap-2"
                     >
@@ -76,6 +96,9 @@ const ContactDetails = () => {
         </div>
                 </div>
             </div>: null    
+        }
+        {
+            isloading ? <LoadingModal /> : null
         }
     </div>
   )
