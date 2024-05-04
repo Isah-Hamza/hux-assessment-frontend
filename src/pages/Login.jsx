@@ -23,7 +23,8 @@ const Login = () => {
         axiosClient().defaults.headers["Authorization"] = 'Bearer ' +
           res.data.token;
         window.localStorage.setItem("hux-token", res.data.token);
-        successToast(res.data.message);
+        window.localStorage.setItem("hux-user", JSON.stringify(res.data.user));
+        // successToast(res.data.message);
         navigate("/");
       },
     });
@@ -44,7 +45,6 @@ const Login = () => {
     });
   
     const { handleSubmit, errors, touched, values, getFieldProps } = formik
-  
 
   return (
     <div className="h-screen sm:px-14 py-10 flex flex-col">

@@ -1,22 +1,16 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Header from '../components/Header/index'
 import { CgCopy, CgTrashEmpty } from 'react-icons/cg'
 import { BiEditAlt } from 'react-icons/bi'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { BsEye } from 'react-icons/bs'
 const ContactDetails = () => {
     const navigate =  useNavigate();
     const [deleteModal, setDeleteModal] = useState(false);
     const [id, setId] = useState();
+    const { contact:item }  = useLocation().state
 
     const toggleDelete = () => setDeleteModal(!deleteModal)
-
-    const contact = {
-            id:1,
-            first_name:'Hamza',
-            last_name:'Isah',
-            phone_number:'09085353455',
-        };
 
     const editContact = (item) => {
         navigate(`edit`, { state: { contact:item } });
@@ -27,6 +21,13 @@ const ContactDetails = () => {
         toggleDelete();
     }
 
+    useEffect(() => {
+    if(!item){
+        navigate('/contacts');
+    }
+    }, [])
+    
+
   return (
     <div className='bg-[#ebeff5] min-h-screen'>
       <Header />
@@ -34,18 +35,18 @@ const ContactDetails = () => {
             <div className='bg-[#2b2b2b] mb-5 w-full p-3 text-white sm:px-5 py-10 rounded-xl flex flex-col justify-between items-center'>
                 <div className='flex text-center flex-col items-center gap-3 sm:gap-5'>
                     <div className=" size-20 uppercase rounded-full text-black bg-gray-50 grid place-content-center text-2xl font-semibold">
-                        { contact.first_name[0] }
-                        { contact.last_name[0] }
+                        { item.first_name[0] }
+                        { item.last_name[0] }
                     </div>
                     <div>
-                        <p>{contact.first_name} {contact.last_name} </p>
-                        <p>{contact.phone_number} </p>
+                        <p>{item.first_name} {item.last_name} </p>
+                        <p>{item.phone_number} </p>
                     </div>
                 </div>
                 <div className="mt-5 text-black flex gap-1.5 sm:gap-3 items-center justify-between">
-                    <button onClick={() => navigate(`${contact.id}`)} className='bg-gray-300 flex items-center px-4 sm:px-5 rounded-lg gap-1 py-2 '> <CgCopy /> Copy </button>
-                    <button onClick={() => editContact(contact)} className='bg-gray-300 flex items-center px-4 sm:px-5 rounded-lg gap-1 py-2 '> <BiEditAlt /> Edit  </button>
-                    <button onClick={() => handleDelete(contact.id)} className='bg-gray-300 flex items-center px-4 sm:px-5 rounded-lg gap-1 py-2 '> <CgTrashEmpty color='red' /> Delete</button>
+                    <button onClick={() => navigate(`${item.id}`)} className='bg-gray-300 flex items-center px-4 sm:px-5 rounded-lg gap-1 py-2 '> <CgCopy /> Copy </button>
+                    <button onClick={() => editContact(item)} className='bg-gray-300 flex items-center px-4 sm:px-5 rounded-lg gap-1 py-2 '> <BiEditAlt /> Edit  </button>
+                    <button onClick={() => handleDelete(item.id)} className='bg-gray-300 flex items-center px-4 sm:px-5 rounded-lg gap-1 py-2 '> <CgTrashEmpty color='red' /> Delete</button>
                 </div>
             </div>
         </div>

@@ -11,17 +11,20 @@ import LoadingModal from "../components/Modal/LoadingModal";
 import { useMutation, useQuery } from "react-query";
 import Auth from '../services/Auth';
 import { toast } from 'react-toastify';
+import Contact from '../services/Contact';
 
 const CreateContact = () => {
 
     const [show, setShow] = useState(false);
     const navigate = useNavigate(); 
-  
-    const { isLoading, mutate } = useMutation(Auth.Register, {
+    const user_id = JSON.parse(window.localStorage.getItem('hux-user'))?.id;
+    console.log(user_id)
+
+    const { isLoading, mutate } = useMutation(Contact.CreateContact, {
       onError: (e) => errorToast(e.message),
       onSuccess: (res) => { 
-        // successToast(res.data.message);
-        navigate("/");
+        successToast(res.data.message);
+        navigate(`/contacts`);
       },
     });
   
@@ -37,7 +40,7 @@ const CreateContact = () => {
         phone_number: Yup.string().required('This field is required'),
       }),
       onSubmit: values => { 
-        mutate(values);
+        mutate({payload:values, id:user_id});
       }
     });
   

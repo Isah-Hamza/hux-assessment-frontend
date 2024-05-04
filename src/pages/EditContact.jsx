@@ -1,8 +1,8 @@
 import { useFormik } from 'formik';
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import * as Yup from 'yup'; 
 import ValidationError from '../components/Error/ValidationError'
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 import { BiEdit, BiSolidLockOpen, BiUser, BiUserPlus } from "react-icons/bi";
 import { BsEyeFill, BsEyeSlashFill, BsPlusSquare } from "react-icons/bs";
@@ -11,24 +11,29 @@ import LoadingModal from "../components/Modal/LoadingModal";
 import { useMutation, useQuery } from "react-query";
 import Auth from '../services/Auth';
 import { toast } from 'react-toastify';
+import Contact from '../services/Contact';
 
 const EditContact = () => {
 
     const navigate = useNavigate(); 
-  
-    const { isLoading, mutate } = useMutation(Auth.Register, {
+    const { contact }  = useLocation().state
+    const user_id = JSON.parse(window.localStorage.getItem('hux-user'))?.id;
+
+
+    const { isLoading, mutate } = useMutation(Contact.EditContact, {
       onError: (e) => errorToast(e.message),
       onSuccess: (res) => { 
         // successToast(res.data.message);
-        navigate("/");
+        // navigate("/contacts");
+        navigate(-1);
       },
     });
   
     const formik = useFormik({
       initialValues: {
-        first_name: '',
-        last_name: '',
-        phone_number:'',
+        first_name: contact.first_name,
+        last_name: contact.last_name,
+        phone_number:contact.phone_number,
       },
       validationSchema: Yup.object().shape({
         first_name: Yup.string().required('This field is required'),
@@ -36,12 +41,18 @@ const EditContact = () => {
         phone_number: Yup.string().required('This field is required'),
       }),
       onSubmit: values => { 
-        mutate(values);
+        mutate({ payload: values, contact_id:contact.id, user_id});
       }
     });
   
     const { handleSubmit, errors, touched, values, getFieldProps } = formik
   
+    
+    useEffect(() => {
+      if(!contact){
+          navigate('/contacts');
+      }
+      }, [])
 
   return (
     <div className="h-screen sm:px-14 py-8 flex flex-col">
@@ -90,12 +101,13 @@ const EditContact = () => {
           )}
         </div>
         <div className='grid sm:grid-cols-2 gap-4 mt-8'>
-          <Link to={'/contacts'}
+          <button
+          onClick={() => navigate(-1)}
             type="button"
             className=" bg-gray-300 rounded-md py-3 w-full font-medium flex items-center justify-center gap-2"
           >
             Go Back
-          </Link>
+          </button>
           <button
             type="submit"
             className="px-5 bg-primary rounded-md py-3 w-full font-medium flex items-center justify-center gap-2"
