@@ -1,6 +1,7 @@
 'use client'
 import React from "react";
 import logo from "../../assets/images/logo.png";
+import { Link } from "react-router-dom";
 
 
 const index = ({  }) => {
@@ -15,14 +16,14 @@ const index = ({  }) => {
         <img src={logo} alt="logo" width={25} height={35} />
         <span className="font-extrabold text-xl">SECRECY PAY</span>
       </div>
-      <button
+      <Link
         onClick={scrollToForm}
-        href={"#waitlist-form"}
+        to={"/contacts/create"}
         className="text-black join-btn font-semibold px-7 py-2.5 rounded-3xl text-sm"
       >
         {" "}
-        JOIN
-      </button>
+        Create New
+      </Link>
     </header>
   );
 };
