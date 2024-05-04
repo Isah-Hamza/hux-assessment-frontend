@@ -91,12 +91,13 @@ const CreateContact = () => {
           )}
         </div>
         <div className='grid grid-cols-2 gap-4 mt-8'>
-          <Link to={'/'}
+          <button
+          onClick={() => navigate(-1)}
             type="button"
             className=" bg-gray-300 rounded-md py-3 w-full font-medium flex items-center justify-center gap-2"
           >
             Go Back
-          </Link>
+          </button>
           <button
             type="submit"
             className=" bg-primary rounded-md py-3 w-full font-medium flex items-center justify-center gap-2"

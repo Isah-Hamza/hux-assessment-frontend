@@ -9,6 +9,8 @@ import { QueryClient, QueryClientProvider } from "react-query";
 import "react-toastify/dist/ReactToastify.css";
 import CreateContact from "./pages/CreateContact";
 import EditContact from "./pages/EditContact";
+import ContactList from "./pages/ContactList";
+import ContactDetails from "./pages/ContactDetails";
 
 function App() {
 
@@ -24,8 +26,10 @@ function App() {
             <Route path="/" Component={Homepage} />
             <Route path="/login" Component={Login} />
             <Route path="/register" Component={Register} />
+            <Route path="/contacts" Component={ContactList} />
             <Route path="/contacts/create" Component={CreateContact} />
             <Route path="/contacts/:id/edit" Component={EditContact} />
+            <Route path="/contacts/:id" Component={ContactDetails} />
           </Routes>
         </BrowserRouter>
       </QueryClientProvider>

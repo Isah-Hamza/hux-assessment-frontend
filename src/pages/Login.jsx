@@ -6,29 +6,27 @@ import { Link, useNavigate } from 'react-router-dom';
 
 import { BiSolidLockOpen } from "react-icons/bi";
 import { BsEyeFill, BsEyeSlashFill } from "react-icons/bs";
-// import Auth from "../../services/Auth";
-// import { successToast, errorToast } from '../../utils/Helper'
 import LoadingModal from "../components/Modal/LoadingModal";
 import { useMutation, useQuery } from "react-query";
-// import axiosClient from "../../api/axiosClient";
+import Auth from '../services/Auth';
+import { errorToast, successToast } from '../utils/Helper';
+import axiosClient from '../api/axiosClient';
 
 const Login = () => {
 
     const [show, setShow] = useState(false);
     const navigate = useNavigate();
-    const [isLoading, setIsLoading] = useState(false);
-    const mutate = () => console.log('object')
   
-    // const { isLoading, mutate } = useMutation(Auth.Login, {
-    //   onError: (e) => errorToast(e.message),
-    //   onSuccess: (res) => {
-    //     axiosClient().defaults.headers["Authorization"] = 'Bearer ' +
-    //       res.data.token;
-    //     window.localStorage.setItem("token", res.data.token);
-    //     successToast(res.data.message);
-    //     navigate("/");
-    //   },
-    // });
+    const { isLoading, mutate } = useMutation(Auth.Login, {
+      onError: (e) => errorToast(e.message),
+      onSuccess: (res) => {
+        axiosClient().defaults.headers["Authorization"] = 'Bearer ' +
+          res.data.token;
+        window.localStorage.setItem("hux-token", res.data.token);
+        successToast(res.data.message);
+        navigate("/");
+      },
+    });
   
     const formik = useFormik({
       initialValues: {
@@ -40,6 +38,7 @@ const Login = () => {
         password: Yup.string().required(),
       }),
       onSubmit: values => {
+        console.log('object')
         mutate(values)
       }
     });
