@@ -15,7 +15,7 @@ const index = ({  }) => {
   const logout = () => {
     window.localStorage.removeItem('hux-user');
     window.localStorage.removeItem('hux-token');
-    window.location.href('/');
+    window.location.href = '/';
   }
 
   useEffect(() => {
