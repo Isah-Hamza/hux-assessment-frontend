@@ -1,5 +1,5 @@
 // import axios from "axios";
-export const baseURL = 'https://localhost:5000';
+export const baseURL = 'http://localhost:5000';
 
 import axios from 'axios';
 

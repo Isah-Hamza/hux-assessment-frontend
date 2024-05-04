@@ -6,29 +6,24 @@ import { Link, useNavigate } from 'react-router-dom';
 
 import { BiSolidLockOpen, BiUserPlus } from "react-icons/bi";
 import { BsEyeFill, BsEyeSlashFill } from "react-icons/bs";
-// import Auth from "../../services/Auth";
-// import { successToast, errorToast } from '../../utils/Helper'
+import { successToast, errorToast } from '../utils/Helper'
 import LoadingModal from "../components/Modal/LoadingModal";
 import { useMutation, useQuery } from "react-query";
-// import axiosClient from "../../api/axiosClient";
+import Auth from '../services/Auth';
+import { toast } from 'react-toastify';
 
 const Register = () => {
 
     const [show, setShow] = useState(false);
-    const navigate = useNavigate();
-    const [isLoading, setIsLoading] = useState(false);
-    const mutate = () => console.log('object')
+    const navigate = useNavigate(); 
   
-    // const { isLoading, mutate } = useMutation(Auth.Login, {
-    //   onError: (e) => errorToast(e.message),
-    //   onSuccess: (res) => {
-    //     axiosClient().defaults.headers["Authorization"] = 'Bearer ' +
-    //       res.data.token;
-    //     window.localStorage.setItem("token", res.data.token);
-    //     successToast(res.data.message);
-    //     navigate("/");
-    //   },
-    // });
+    const { isLoading, mutate } = useMutation(Auth.Register, {
+      onError: (e) => errorToast(e.message),
+      onSuccess: (res) => { 
+        // successToast(res.data.message);
+        navigate("/");
+      },
+    });
   
     const formik = useFormik({
       initialValues: {
@@ -36,14 +31,20 @@ const Register = () => {
         password: '',
         confirm:'',
       },
-      validationSchema: Yup.object().shape({
-        email: Yup.string().required(),
-        password: Yup.string().required(),
-        confirm: Yup.string()
-          .oneOf([Yup.ref('password'), null], "Passwords doesn't match"),
-      }),
+      // validationSchema: Yup.object().shape({
+      //   email: Yup.string().required(),
+      //   password: Yup.string().required(),
+      //   confirm: Yup.string()
+      //     .oneOf([Yup.ref('password'), null], "Passwords doesn't match"),
+      // }),
       onSubmit: values => {
-        mutate(values)
+        const data = { 
+          email: values.email,
+          password: values.password
+         }
+        mutate(data);
+        // navigate("/");
+
       }
     });
   

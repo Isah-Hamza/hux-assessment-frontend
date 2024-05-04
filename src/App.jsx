@@ -1,11 +1,12 @@
 import "./App.css";
 
 import { ToastContainer } from "react-toastify";
-import { Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Homepage from "./pages/hompage";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import { QueryClient, QueryClientProvider } from "react-query";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
 
@@ -14,13 +15,15 @@ function App() {
 
   return (
     <>
-      <ToastContainer />
+       <ToastContainer/>
       <QueryClientProvider client={queryClient}>
-        <Routes>
-          <Route path="/" Component={Homepage} />
-          <Route path="/login" Component={Login} />
-          <Route path="/register" Component={Register} />
-        </Routes>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" Component={Homepage} />
+            <Route path="/login" Component={Login} />
+            <Route path="/register" Component={Register} />
+          </Routes>
+        </BrowserRouter>
       </QueryClientProvider>
     </>
   );
