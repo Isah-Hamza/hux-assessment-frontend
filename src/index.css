@@ -1,3 +1,124 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+body {
+  @apply bg-black;
+  scroll-behavior: smooth;
+  font-family: "Poppins", sans-serif !important;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+.carousel {
+  width: 90%;
+  margin: 0px auto;
+}
+.slick-list {
+  /* padding: 0; */
+}
+.slick-slide:nth-of-type(1) {
+  transform: translateX(312px);
+}
+.slick-slide:nth-of-type(2) {
+  transform: translateX(284px);
+}
+.slick-slide:nth-of-type(3) {
+  transform: translateX(256px);
+}
+.slick-slide:nth-of-type(4) {
+  transform: translateX(228px);
+}
+.slick-slide:nth-of-type(5) {
+  transform: translateX(200px);
+}
+.slick-slide:nth-of-type(6) {
+  transform: translateX(172px);
+}
+.slick-slide > div {
+  /* margin-left: -74px; */
+  max-width: 340px;
+  width: 340px;
+}
+.slick-initialized {
+  overflow: hidden;
+}
+.slick-arrow {
+  display: none !important;
+}
+
+.slick-track {
+  @apply !max-w-full !flex !gap-7;
+}
+
+.join-btn {
+  background: linear-gradient(
+    83.08deg,
+    #45f5a1 7.34%,
+    rgba(69, 245, 161, 0.48) 92.07%
+  );
+}
+
+.hero,
+.faqs {
+  background: url(./assets/images/Dots.png);
+}
+
+.faqs {
+  background-origin: padding-box;
+}
+
+.req-to-join-btn {
+  background: linear-gradient(
+      83.08deg,
+      #45f5a1 7.34%,
+      rgba(69, 245, 161, 0.48) 92.07%
+    ),
+    linear-gradient(0deg, rgba(69, 245, 161, 0.12), rgba(69, 245, 161, 0.12));
+  /* border: 11px solid #45F5A11F; */
+  border: 11px solid rgb(25, 37, 25);
+}
+
+.req-to-join-btn-black {
+  border: 7px solid #5c4e4e;
+}
+
+.features .feature,
+.resources .resource,
+.feature {
+  background: linear-gradient(180deg, #131a14 0%, rgba(19, 26, 20, 0) 100%);
+}
+
+.features .feature:hover,
+.resources .resource:hover .feature:hover {
+  scale: 105%;
+  background: linear-gradient(45.84deg, #131a14 1.97%, #253426 97.02%);
+  box-shadow: -40px 24px 64px 0px #000000d9;
+  box-shadow: 0px 4px 4px 0px #00000040;
+}
+
+.feature-1,
+.resource-2 {
+  margin-top: 20px;
+}
+
+.feature-2,
+.resource-3 {
+  margin-top: 40px;
+}
+
+.feature-4 {
+  margin-top: 20px;
+}
+
+.feature-5 {
+  margin-top: 40px;
+}
+
+@media screen and (max-width: 768px) {
+  .feature-2,
+  .resource-3 {
+    margin-top: 20px;
+  }
+}

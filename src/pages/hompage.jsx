@@ -1,36 +1,36 @@
 import { useState } from "react";
-import "./App.css";
+import "../App.css";
 
-import Form from "./components/Form";
-import FAQ from "./components/FAQ";
-import Header from "./components/Header";
-import LearnMoreButton from "./components/Button";
-import FeaturesDesktop from "./components/FeaturesDesktop";
-import ResponsiveSlider from "./components/Slider/ResponsiveSlider";
-import Footer from "./components/Footer";
+import Form from "../components/Form";
+import FAQ from "../components/FAQ";
+import Header from "../components/Header";
+import LearnMoreButton from "../components/Button";
+import FeaturesDesktop from "../components/FeaturesDesktop";
+import ResponsiveSlider from "../components/Slider/ResponsiveSlider";
+import Footer from "../components/Footer";
 
-import black_arrow from "./assets/images/arrow-right-black.png";
-import white_arrow from "./assets/images/arrow-right-white.png";
-import right_ellipse from "./assets/images/right-ellipse.png";
-import left_ellipse from "./assets/images/left-ellipse.png";
-import feature1 from "./assets/images/swap.png";
-import feature2 from "./assets/images/secure.png";
-import feature3 from "./assets/images/send_funds.png";
-import feature4 from "./assets/images/simplified_payment.png";
-import feature5 from "./assets/images/get_paid.png";
+import black_arrow from "../assets/images/arrow-right-black.png";
+import white_arrow from "../assets/images/arrow-right-white.png";
+import right_ellipse from "../assets/images/right-ellipse.png";
+import left_ellipse from "../assets/images/left-ellipse.png";
+import feature1 from "../assets/images/swap.png";
+import feature2 from "../assets/images/secure.png";
+import feature3 from "../assets/images/send_funds.png";
+import feature4 from "../assets/images/simplified_payment.png";
+import feature5 from "../assets/images/get_paid.png";
 
-import country1 from "./assets/images/country1.png";
-import country2 from "./assets/images/country2.png";
-import country3 from "./assets/images/country3.png";
-import country4 from "./assets/images/country4.png";
-import country5 from "./assets/images/country5.png";
-import country6 from "./assets/images/country6.png";
-import country7 from "./assets/images/uae-flag.png";
-import playStore from "./assets/images/get_google_play.svg";
-import appStore from "./assets/images/get_play_store.svg";
+import country1 from "../assets/images/country1.png";
+import country2 from "../assets/images/country2.png";
+import country3 from "../assets/images/country3.png";
+import country4 from "../assets/images/country4.png";
+import country5 from "../assets/images/country5.png";
+import country6 from "../assets/images/country6.png";
+import country7 from "../assets/images/uae-flag.png";
+import playStore from "../assets/images/get_google_play.svg";
+import appStore from "../assets/images/get_play_store.svg";
 import { ToastContainer } from "react-toastify";
 
-function App() {
+function Homepage() {
   const features = [
     {
       title: "Experience Zero Fee Swap",
@@ -228,4 +228,4 @@ function App() {
   );
 }
 
-export default App;
+export default Homepage;
