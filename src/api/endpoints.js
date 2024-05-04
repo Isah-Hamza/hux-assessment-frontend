@@ -1,7 +1,7 @@
 const endpoints = {
   auth: {
     LOGIN: "login",
-    REGISTER: "register", 
+    REGISTER: "users", 
   },
 
 };

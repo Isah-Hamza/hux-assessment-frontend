@@ -4,7 +4,7 @@ import * as Yup from 'yup';
 import ValidationError from '../components/Error/ValidationError'
 import { Link, useNavigate } from 'react-router-dom';
 
-import { BiSolidLockOpen } from "react-icons/bi";
+import { BiSolidLockOpen, BiUserPlus } from "react-icons/bi";
 import { BsEyeFill, BsEyeSlashFill } from "react-icons/bs";
 // import Auth from "../../services/Auth";
 // import { successToast, errorToast } from '../../utils/Helper'
@@ -12,7 +12,7 @@ import LoadingModal from "../components/Modal/LoadingModal";
 import { useMutation, useQuery } from "react-query";
 // import axiosClient from "../../api/axiosClient";
 
-const Login = () => {
+const Register = () => {
 
     const [show, setShow] = useState(false);
     const navigate = useNavigate();
@@ -34,10 +34,13 @@ const Login = () => {
       initialValues: {
         email: '',
         password: '',
+        confirm:'',
       },
       validationSchema: Yup.object().shape({
         email: Yup.string().required(),
         password: Yup.string().required(),
+        confirm: Yup.string()
+          .oneOf([Yup.ref('password'), null], "Passwords doesn't match"),
       }),
       onSubmit: values => {
         mutate(values)
@@ -48,13 +51,10 @@ const Login = () => {
   
 
   return (
-    <div className="h-screen sm:px-14 py-10 flex flex-col">
-    <div className="header">
-      <p>My Contacts</p>
-    </div>
+    <div className="h-screen sm:px-14 py-8 flex flex-col">
     <div className="bg-white p-5 rounded-md main w-[90%] sm:w-[unset] sm:max-w-[430px] h-fit py-10 grid place-content-center m-auto">
       <h2 className="text-2xl sm:text-3xl font-bold text-center">
-        Welcome back to Supreme Contact!
+        Create Free Account To Start Saving Contacts!
       </h2>
       <form onSubmit={handleSubmit} className="mt-10">
         <div className="flex flex-col text-sm mb-4">
@@ -63,7 +63,7 @@ const Login = () => {
           </label>
           <input
             type="text"
-            className=" outline-none p-3 border-thick_blue border rounded-md"
+            className="text-sm outline-none p-3 border-thick_blue border rounded-md"
             {...getFieldProps('email')}
           />
           {touched.email && errors.email && (
@@ -77,7 +77,7 @@ const Login = () => {
           <div className="relative w-full">
             <input
               type={show ? "text" : "password"}
-              className="bg-custom_gray outline-none p-3 border-thick_blue border rounded-md w-full"
+              className="text-sm bg-custom_gray outline-none p-3 border-thick_blue border rounded-md w-full"
               {...getFieldProps('password')}
             />
             <div
@@ -89,6 +89,27 @@ const Login = () => {
           </div>
                 {touched.password && errors.password && (
                   <ValidationError text={errors.password} />
+                )}
+        </div>
+        <div className="flex flex-col text-sm mb-2 mt-5">
+          <label className="font-medium" htmlFor="email">
+            Confirm Password
+          </label>
+          <div className="relative w-full">
+            <input
+              type={show ? "text" : "password"}
+              className="text-sm bg-custom_gray outline-none p-3 border-thick_blue border rounded-md w-full"
+              {...getFieldProps('confirm')}
+            />
+            <div
+              onClick={() => setShow(!show)}
+              className="cursor-pointer w-10 h-full bg-gray-400 border border-thick_blue absolute grid place-content-center right-0 top-0 rounded-r-md"
+              >
+              {show ? <BsEyeSlashFill size={17} /> : <BsEyeFill size={17} />}
+            </div>
+          </div>
+                {touched.confirm && errors.confirm && (
+                  <ValidationError text={errors.confirm} />
                 )}
         </div>
         <div className="flex gap-1 text-sm items-center">
@@ -104,10 +125,10 @@ const Login = () => {
           type="submit"
           className="mt-12 bg-primary rounded-md py-3 w-full font-medium flex items-center justify-center gap-2"
         >
-          <BiSolidLockOpen size={20} />
-          Sign In
+          <BiUserPlus size={20} />
+          Create Account
         </button>
-        <p className='text-xs text-center mt-2'>New to our platform ? <Link to={'/register'} className='font-semibold italic text-primary'>Register</Link> </p>
+        <p className='text-xs text-center mt-2'>Already have an account ? <Link to={'/login'} className='font-semibold italic text-primary'>Login</Link> </p>
       </form>
     </div>
     {
@@ -117,4 +138,4 @@ const Login = () => {
   )
 }
 
-export default Login
+export default Register
